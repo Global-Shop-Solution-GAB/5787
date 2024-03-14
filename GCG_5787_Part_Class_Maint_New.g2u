@@ -1,0 +1,1091 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.F_Maintenance..Create(BaseForm)
+Gui.F_Maintenance..Caption("Part Class & Type Maintenance")
+Gui.F_Maintenance..Size(8715,12150)
+Gui.F_Maintenance..MinX(0)
+Gui.F_Maintenance..MinY(0)
+Gui.F_Maintenance..Position(0,0)
+Gui.F_Maintenance..BackColor(-2147483633)
+Gui.F_Maintenance..MousePointer(0)
+Gui.F_Maintenance..Event(UnLoad,F_Maintenance_UnLoad)
+Gui.F_Maintenance..AlwaysOnTop(False)
+Gui.F_Maintenance..FontName("Tahoma")
+Gui.F_Maintenance..FontSize(8.25)
+Gui.F_Maintenance..ControlBox(True)
+Gui.F_Maintenance..MaxButton(True)
+Gui.F_Maintenance..MinButton(True)
+Gui.F_Maintenance..Moveable(True)
+Gui.F_Maintenance..Sizeable(True)
+Gui.F_Maintenance..ShowInTaskBar(True)
+Gui.F_Maintenance..TitleBar(True)
+Gui.F_Maintenance.GsGcPartClass.Create(GsGridControl)
+Gui.F_Maintenance.GsGcPartClass.Size(3810,7500)
+Gui.F_Maintenance.GsGcPartClass.Position(75,4110)
+Gui.F_Maintenance.GsGcPartClass.Event(RowClick,GsGcPartClass_RowClick)
+Gui.F_Maintenance.GsGcPartClass.Anchor(7)
+Gui.F_Maintenance.GsGcPartClass.Enabled(True)
+Gui.F_Maintenance.GsGcPartClass.Visible(True)
+Gui.F_Maintenance.GsGcPartClass.Zorder(0)
+Gui.F_Maintenance.GsGcPartType.Create(GsGridControl)
+Gui.F_Maintenance.GsGcPartType.Size(4620,7500)
+Gui.F_Maintenance.GsGcPartType.Position(3945,4110)
+Gui.F_Maintenance.GsGcPartType.Event(RowClick,GsGcPartType_RowClick)
+Gui.F_Maintenance.GsGcPartType.Anchor(15)
+Gui.F_Maintenance.GsGcPartType.Enabled(True)
+Gui.F_Maintenance.GsGcPartType.Visible(True)
+Gui.F_Maintenance.GsGcPartType.Zorder(0)
+Gui.F_Maintenance.frmDefaults.Create(Frame)
+Gui.F_Maintenance.frmDefaults.Size(8505,2265)
+Gui.F_Maintenance.frmDefaults.Position(75,1785)
+Gui.F_Maintenance.frmDefaults.Caption("Defaults")
+Gui.F_Maintenance.frmDefaults.Anchor(13)
+Gui.F_Maintenance.frmDefaults.Enabled(True)
+Gui.F_Maintenance.frmDefaults.Visible(True)
+Gui.F_Maintenance.frmDefaults.Zorder(0)
+Gui.F_Maintenance.frmDefaults.FontName("Tahoma")
+Gui.F_Maintenance.frmDefaults.FontSize(8.25)
+Gui.F_Maintenance.frmDefaults.BorderStyle(3)
+Gui.F_Maintenance.txt_D_SetupScrap.Create(TextBox,"",True,1260,300,0,5040,540,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_SetupScrap.Parent("frmDefaults")
+Gui.F_Maintenance.txt_D_MRC.Create(TextBox,"",True,1260,300,0,6465,540,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_MRC.Parent("frmDefaults")
+Gui.F_Maintenance.txt_D_OrderQty.Create(TextBox,"",True,990,300,0,120,1200,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_OrderQty.Parent("frmDefaults")
+Gui.F_Maintenance.txt_D_SafetyQty.Create(TextBox,"",True,990,300,0,1230,1200,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_SafetyQty.Parent("frmDefaults")
+Gui.F_Maintenance.txt_D_ReorderPoint.Create(TextBox,"",True,1065,300,0,2400,1200,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_ReorderPoint.Parent("frmDefaults")
+Gui.F_Maintenance.txt_D_Buyer.Create(TextBox,"",True,690,300,0,3585,1200,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_Buyer.Parent("frmDefaults")
+Gui.F_Maintenance.cmdExport.Create(Button)
+Gui.F_Maintenance.cmdExport.Enabled(True)
+Gui.F_Maintenance.cmdExport.Visible(True)
+Gui.F_Maintenance.cmdExport.Zorder(0)
+Gui.F_Maintenance.cmdExport.Size(1125,375)
+Gui.F_Maintenance.cmdExport.Position(5940,1755)
+Gui.F_Maintenance.cmdExport.Caption("Export")
+Gui.F_Maintenance.cmdExport.FontName("Tahoma")
+Gui.F_Maintenance.cmdExport.FontSize(8.25)
+Gui.F_Maintenance.cmdExport.Parent("frmDefaults")
+Gui.F_Maintenance.cmdExport.Event(Click,cmdExport_Click)
+Gui.F_Maintenance.txt_D_Package.Create(TextBox,"",True,870,300,0,2175,540,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_Package.Parent("frmDefaults")
+Gui.F_Maintenance.lbl13.Create(Label,"Amt Cost",True,660,210,0,5475,975,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl13.Parent("frmDefaults")
+Gui.F_Maintenance.lbl13.BorderStyle(0)
+Gui.F_Maintenance.txt_D_RunScrap.Create(TextBox,"",True,960,300,0,3870,540,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_RunScrap.Parent("frmDefaults")
+Gui.F_Maintenance.txt_D_ABC.Create(TextBox,"",True,420,300,0,3255,540,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_ABC.Parent("frmDefaults")
+Gui.F_Maintenance.txt_D_Purch_UoM.Create(TextBox,"",True,870,300,0,1125,540,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_Purch_UoM.Parent("frmDefaults")
+Gui.F_Maintenance.lbl11.Create(Label,"Buyer",True,450,210,0,3600,975,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl11.Parent("frmDefaults")
+Gui.F_Maintenance.lbl11.BorderStyle(0)
+Gui.F_Maintenance.lbl21.Create(Label,"Sensitive Devices",True,1290,210,0,1260,1635,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl21.Parent("frmDefaults")
+Gui.F_Maintenance.lbl21.BorderStyle(0)
+Gui.F_Maintenance.txt_D_Sensitive.Create(TextBox,"",True,1410,300,0,1260,1860,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_Sensitive.Parent("frmDefaults")
+Gui.F_Maintenance.lbl22.Create(Label,"Documentation",True,1065,210,0,2835,1635,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl22.Parent("frmDefaults")
+Gui.F_Maintenance.lbl22.BorderStyle(0)
+Gui.F_Maintenance.txt_D_Documentation.Create(TextBox,"",True,1410,300,0,2850,1860,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_Documentation.Parent("frmDefaults")
+Gui.F_Maintenance.txt_D_NCNR.Create(TextBox,"",True,690,300,0,4455,1860,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_NCNR.Parent("frmDefaults")
+Gui.F_Maintenance.lbl23.Create(Label,"NCNR",True,420,210,0,4470,1635,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl23.Parent("frmDefaults")
+Gui.F_Maintenance.lbl23.BorderStyle(0)
+Gui.F_Maintenance.chk1.Create(CheckBox)
+Gui.F_Maintenance.chk1.Size(1890,300)
+Gui.F_Maintenance.chk1.Position(6555,990)
+Gui.F_Maintenance.chk1.Parent("frmDefaults")
+Gui.F_Maintenance.chk1.Caption("Inspection Required")
+Gui.F_Maintenance.chk1.Enabled(True)
+Gui.F_Maintenance.chk1.Visible(True)
+Gui.F_Maintenance.chk1.Zorder(0)
+Gui.F_Maintenance.chk1.FontName("Tahoma")
+Gui.F_Maintenance.chk1.FontSize(8.25)
+Gui.F_Maintenance.cmdSaveDefault.Create(Button)
+Gui.F_Maintenance.cmdSaveDefault.Size(1245,375)
+Gui.F_Maintenance.cmdSaveDefault.Position(7155,1755)
+Gui.F_Maintenance.cmdSaveDefault.Parent("frmDefaults")
+Gui.F_Maintenance.cmdSaveDefault.Caption("Save Defaults")
+Gui.F_Maintenance.cmdSaveDefault.Event(Click,cmdSaveDefault_Click)
+Gui.F_Maintenance.cmdSaveDefault.Anchor(9)
+Gui.F_Maintenance.cmdSaveDefault.Enabled(True)
+Gui.F_Maintenance.cmdSaveDefault.Visible(True)
+Gui.F_Maintenance.cmdSaveDefault.Zorder(0)
+Gui.F_Maintenance.cmdSaveDefault.FontName("Tahoma")
+Gui.F_Maintenance.cmdSaveDefault.FontSize(8.25)
+Gui.F_Maintenance.txt_D_AmtCost.Create(TextBox,"",True,915,300,0,5475,1200,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_AmtCost.Parent("frmDefaults")
+Gui.F_Maintenance.txt_D_Certification.Create(TextBox,"",True,1005,300,0,120,1860,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_Certification.Parent("frmDefaults")
+Gui.F_Maintenance.lbl20.Create(Label,"Certification",True,855,210,0,120,1635,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl20.Parent("frmDefaults")
+Gui.F_Maintenance.lbl20.BorderStyle(0)
+Gui.F_Maintenance.chk2.Create(CheckBox)
+Gui.F_Maintenance.chk2.Size(1920,300)
+Gui.F_Maintenance.chk2.Position(6555,1320)
+Gui.F_Maintenance.chk2.Parent("frmDefaults")
+Gui.F_Maintenance.chk2.Caption("Certificates Required")
+Gui.F_Maintenance.chk2.Enabled(True)
+Gui.F_Maintenance.chk2.Visible(True)
+Gui.F_Maintenance.chk2.Zorder(0)
+Gui.F_Maintenance.chk2.FontName("Tahoma")
+Gui.F_Maintenance.chk2.FontSize(8.25)
+Gui.F_Maintenance.txt_D_LeadDays.Create(TextBox,"",True,915,300,0,4410,1200,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_LeadDays.Parent("frmDefaults")
+Gui.F_Maintenance.txt_D_StkUoM.Create(TextBox,"",True,870,300,0,105,540,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_D_StkUoM.Parent("frmDefaults")
+Gui.F_Maintenance.lbl3.Create(Label,"Package",True,615,210,0,2235,300,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl3.Parent("frmDefaults")
+Gui.F_Maintenance.lbl3.BorderStyle(0)
+Gui.F_Maintenance.lbl4.Create(Label,"ABC",True,450,255,0,3255,300,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl4.Parent("frmDefaults")
+Gui.F_Maintenance.lbl4.BorderStyle(0)
+Gui.F_Maintenance.lbl5.Create(Label,"Run Scrap %",True,960,210,0,3840,300,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl5.Parent("frmDefaults")
+Gui.F_Maintenance.lbl5.BorderStyle(0)
+Gui.F_Maintenance.lbl6.Create(Label,"Setup Scrap Qty",True,1200,210,0,5025,300,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl6.Parent("frmDefaults")
+Gui.F_Maintenance.lbl6.BorderStyle(0)
+Gui.F_Maintenance.lbl7.Create(Label,"MRC",True,330,210,0,6465,300,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl7.Parent("frmDefaults")
+Gui.F_Maintenance.lbl7.BorderStyle(0)
+Gui.F_Maintenance.lbl8.Create(Label,"Order Qty",True,720,210,0,120,975,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl8.Parent("frmDefaults")
+Gui.F_Maintenance.lbl8.BorderStyle(0)
+Gui.F_Maintenance.lbl9.Create(Label,"Safety Qty",True,780,210,0,1275,975,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl9.Parent("frmDefaults")
+Gui.F_Maintenance.lbl9.BorderStyle(0)
+Gui.F_Maintenance.lbl10.Create(Label,"Reorder Point",True,975,210,0,2355,975,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl10.Parent("frmDefaults")
+Gui.F_Maintenance.lbl10.BorderStyle(0)
+Gui.F_Maintenance.lbl12.Create(Label,"Lead Days",True,780,210,0,4365,975,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl12.Parent("frmDefaults")
+Gui.F_Maintenance.lbl12.BorderStyle(0)
+Gui.F_Maintenance.lbl2.Create(Label,"Purch UoM",True,780,210,0,1125,300,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl2.Parent("frmDefaults")
+Gui.F_Maintenance.lbl2.BorderStyle(0)
+Gui.F_Maintenance.lbl1.Create(Label,"Stk UoM",True,585,210,0,105,300,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl1.Parent("frmDefaults")
+Gui.F_Maintenance.lbl1.BorderStyle(0)
+Gui.F_Maintenance.frame2.Create(Frame)
+Gui.F_Maintenance.frame2.Size(8520,1590)
+Gui.F_Maintenance.frame2.Position(75,90)
+Gui.F_Maintenance.frame2.Anchor(13)
+Gui.F_Maintenance.frame2.Enabled(True)
+Gui.F_Maintenance.frame2.Visible(True)
+Gui.F_Maintenance.frame2.Zorder(0)
+Gui.F_Maintenance.frame2.Caption("")
+Gui.F_Maintenance.frame2.FontName("Tahoma")
+Gui.F_Maintenance.frame2.FontSize(8.25)
+Gui.F_Maintenance.frame2.BorderStyle(3)
+Gui.F_Maintenance.cmdNewType.Create(Button)
+Gui.F_Maintenance.cmdNewType.Size(1260,375)
+Gui.F_Maintenance.cmdNewType.Position(7125,675)
+Gui.F_Maintenance.cmdNewType.Parent("frame2")
+Gui.F_Maintenance.cmdNewType.Caption("New Type")
+Gui.F_Maintenance.cmdNewType.Event(Click,cmdNewType_Click)
+Gui.F_Maintenance.cmdNewType.Anchor(9)
+Gui.F_Maintenance.cmdNewType.Enabled(True)
+Gui.F_Maintenance.cmdNewType.Visible(True)
+Gui.F_Maintenance.cmdNewType.Zorder(0)
+Gui.F_Maintenance.cmdNewType.FontName("Tahoma")
+Gui.F_Maintenance.cmdNewType.FontSize(8.25)
+Gui.F_Maintenance.lbl14.Create(Label,"Part Class",True,735,210,0,150,255,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl14.Parent("frame2")
+Gui.F_Maintenance.lbl14.BorderStyle(0)
+Gui.F_Maintenance.cmdNewClass.Create(Button)
+Gui.F_Maintenance.cmdNewClass.Size(1260,375)
+Gui.F_Maintenance.cmdNewClass.Position(5835,675)
+Gui.F_Maintenance.cmdNewClass.Parent("frame2")
+Gui.F_Maintenance.cmdNewClass.Caption("New Class")
+Gui.F_Maintenance.cmdNewClass.Event(Click,cmdNewClass_Click)
+Gui.F_Maintenance.cmdNewClass.Anchor(9)
+Gui.F_Maintenance.cmdNewClass.Enabled(True)
+Gui.F_Maintenance.cmdNewClass.Visible(True)
+Gui.F_Maintenance.cmdNewClass.Zorder(0)
+Gui.F_Maintenance.cmdNewClass.FontName("Tahoma")
+Gui.F_Maintenance.cmdNewClass.FontSize(8.25)
+Gui.F_Maintenance.lbl15.Create(Label,"Description",True,810,210,0,1305,255,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl15.Parent("frame2")
+Gui.F_Maintenance.lbl15.BorderStyle(0)
+Gui.F_Maintenance.lbl16.Create(Label,"Quality Spec",True,915,210,0,4395,270,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl16.Parent("frame2")
+Gui.F_Maintenance.lbl16.BorderStyle(0)
+Gui.F_Maintenance.lbl17.Create(Label,"Part Type",True,690,210,0,165,915,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl17.Parent("frame2")
+Gui.F_Maintenance.lbl17.BorderStyle(0)
+Gui.F_Maintenance.lbl18.Create(Label,"Part Prefix",True,750,210,0,1350,930,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl18.Parent("frame2")
+Gui.F_Maintenance.lbl18.BorderStyle(0)
+Gui.F_Maintenance.lbl19.Create(Label,"Part Description Template",True,1830,210,0,2520,915,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_Maintenance.lbl19.Parent("frame2")
+Gui.F_Maintenance.lbl19.BorderStyle(0)
+Gui.F_Maintenance.txt_M_PartClass.Create(TextBox,"",True,990,300,0,150,480,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_M_PartClass.Parent("frame2")
+Gui.F_Maintenance.txt_M_PartClass.Locked(True)
+Gui.F_Maintenance.txt_M_PartClass.MaxLength(4)
+Gui.F_Maintenance.txt_M_ClassDesc.Create(TextBox,"",True,2985,300,0,1290,495,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_M_ClassDesc.Parent("frame2")
+Gui.F_Maintenance.txt_M_Quality.Create(TextBox,"",True,1170,300,0,4380,510,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_M_Quality.Parent("frame2")
+Gui.F_Maintenance.txt_M_PartType.Create(TextBox,"",True,990,300,0,165,1170,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_M_PartType.Parent("frame2")
+Gui.F_Maintenance.txt_M_PartType.Locked(True)
+Gui.F_Maintenance.txt_M_PartType.MaxLength(5)
+Gui.F_Maintenance.txt_M_PartPrefix.Create(TextBox,"",True,990,300,0,1350,1170,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_M_PartPrefix.Parent("frame2")
+Gui.F_Maintenance.txt_M_PartPrefix.MaxLength(4)
+Gui.F_Maintenance.txt_M_DescTemplate.Create(TextBox,"",True,3030,300,0,2520,1170,True,0,"Arial",8,-2147483643,1)
+Gui.F_Maintenance.txt_M_DescTemplate.Parent("frame2")
+Gui.F_Maintenance.cmdSavePartClass.Create(Button)
+Gui.F_Maintenance.cmdSavePartClass.Size(2535,375)
+Gui.F_Maintenance.cmdSavePartClass.Position(5835,1110)
+Gui.F_Maintenance.cmdSavePartClass.Parent("frame2")
+Gui.F_Maintenance.cmdSavePartClass.Caption("Save Part Class")
+Gui.F_Maintenance.cmdSavePartClass.Anchor(9)
+Gui.F_Maintenance.cmdSavePartClass.Enabled(True)
+Gui.F_Maintenance.cmdSavePartClass.Visible(True)
+Gui.F_Maintenance.cmdSavePartClass.Zorder(0)
+Gui.F_Maintenance.cmdSavePartClass.FontName("Tahoma")
+Gui.F_Maintenance.cmdSavePartClass.FontSize(8.25)
+Gui.F_Maintenance.cmdNewPart.Create(Button)
+Gui.F_Maintenance.cmdNewPart.Enabled(True)
+Gui.F_Maintenance.cmdNewPart.Visible(True)
+Gui.F_Maintenance.cmdNewPart.Zorder(0)
+Gui.F_Maintenance.cmdNewPart.Size(2535,375)
+Gui.F_Maintenance.cmdNewPart.Position(5835,225)
+Gui.F_Maintenance.cmdNewPart.Anchor(9)
+Gui.F_Maintenance.cmdNewPart.Caption("New Part")
+Gui.F_Maintenance.cmdNewPart.FontName("Tahoma")
+Gui.F_Maintenance.cmdNewPart.FontSize(8.25)
+Gui.F_Maintenance.cmdNewPart.Parent("frame2")
+Gui.F_Maintenance.cmdNewPart.Event(Click,cmdNewPart_Click)
+Gui.F_PartClass..Create(BaseForm)
+Gui.F_PartClass..Caption("New Part Class")
+Gui.F_PartClass..Size(5820,2220)
+Gui.F_PartClass..MinX(0)
+Gui.F_PartClass..MinY(0)
+Gui.F_PartClass..Position(0,0)
+Gui.F_PartClass..BackColor(-2147483633)
+Gui.F_PartClass..MousePointer(0)
+Gui.F_PartClass..Event(UnLoad,F_PartClass_UnLoad)
+Gui.F_PartClass..AlwaysOnTop(False)
+Gui.F_PartClass..FontName("Tahoma")
+Gui.F_PartClass..FontSize(8.25)
+Gui.F_PartClass..ControlBox(True)
+Gui.F_PartClass..MaxButton(True)
+Gui.F_PartClass..MinButton(True)
+Gui.F_PartClass..Moveable(True)
+Gui.F_PartClass..Sizeable(True)
+Gui.F_PartClass..ShowInTaskBar(True)
+Gui.F_PartClass..TitleBar(True)
+Gui.F_PartClass.frmNewClass.Create(Frame)
+Gui.F_PartClass.frmNewClass.Size(5430,1500)
+Gui.F_PartClass.frmNewClass.Position(60,75)
+Gui.F_PartClass.frmNewClass.Enabled(True)
+Gui.F_PartClass.frmNewClass.Visible(True)
+Gui.F_PartClass.frmNewClass.Zorder(0)
+Gui.F_PartClass.frmNewClass.Caption("")
+Gui.F_PartClass.frmNewClass.FontName("Tahoma")
+Gui.F_PartClass.frmNewClass.FontSize(8.25)
+Gui.F_PartClass.txt_PC_PartClass.Create(TextBox,"",True,885,300,0,90,540,True,0,"Arial",8,-2147483643,1)
+Gui.F_PartClass.txt_PC_PartClass.Parent("frmNewClass")
+Gui.F_PartClass.txt_PC_PartClass.MaxLength(4)
+Gui.F_PartClass.lbl1.Create(Label,"Part Class",True,1020,255,0,90,270,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_PartClass.lbl1.Parent("frmNewClass")
+Gui.F_PartClass.lbl1.BorderStyle(0)
+Gui.F_PartClass.lbl2.Create(Label,"Description",True,1020,255,0,1185,270,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_PartClass.lbl2.Parent("frmNewClass")
+Gui.F_PartClass.lbl2.BorderStyle(0)
+Gui.F_PartClass.lbl3.Create(Label,"Quality Spec",True,1110,255,0,4065,270,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_PartClass.lbl3.Parent("frmNewClass")
+Gui.F_PartClass.lbl3.BorderStyle(0)
+Gui.F_PartClass.txt_PC_Description.Create(TextBox,"",True,2745,300,0,1185,540,True,0,"Arial",8,-2147483643,1)
+Gui.F_PartClass.txt_PC_Description.Parent("frmNewClass")
+Gui.F_PartClass.txt_PC_Description.MaxLength(30)
+Gui.F_PartClass.txt_PC_Quality.Create(TextBox,"",True,1215,300,0,4065,540,True,0,"Arial",8,-2147483643,1)
+Gui.F_PartClass.txt_PC_Quality.Parent("frmNewClass")
+Gui.F_PartClass.txt_PC_Quality.MaxLength(30)
+Gui.F_PartClass.cmdSaveNewClass.Create(Button)
+Gui.F_PartClass.cmdSaveNewClass.Size(2715,375)
+Gui.F_PartClass.cmdSaveNewClass.Position(1215,990)
+Gui.F_PartClass.cmdSaveNewClass.Parent("frmNewClass")
+Gui.F_PartClass.cmdSaveNewClass.Caption("Save")
+Gui.F_PartClass.cmdSaveNewClass.Event(Click,cmdSaveNewClass_Click)
+Gui.F_PartClass.cmdSaveNewClass.Enabled(True)
+Gui.F_PartClass.cmdSaveNewClass.Visible(True)
+Gui.F_PartClass.cmdSaveNewClass.Zorder(0)
+Gui.F_PartClass.cmdSaveNewClass.FontName("Tahoma")
+Gui.F_PartClass.cmdSaveNewClass.FontSize(8.25)
+Gui.F_PartType..Create(BaseForm)
+Gui.F_PartType..Caption("New Part Type")
+Gui.F_PartType..Size(6915,2310)
+Gui.F_PartType..MinX(0)
+Gui.F_PartType..MinY(0)
+Gui.F_PartType..Position(0,0)
+Gui.F_PartType..BackColor(-2147483633)
+Gui.F_PartType..MousePointer(0)
+Gui.F_PartType..Event(UnLoad,F_PartType_UnLoad)
+Gui.F_PartType..AlwaysOnTop(False)
+Gui.F_PartType..FontName("Tahoma")
+Gui.F_PartType..FontSize(8.25)
+Gui.F_PartType..ControlBox(True)
+Gui.F_PartType..MaxButton(True)
+Gui.F_PartType..MinButton(True)
+Gui.F_PartType..Moveable(True)
+Gui.F_PartType..Sizeable(True)
+Gui.F_PartType..ShowInTaskBar(True)
+Gui.F_PartType..TitleBar(True)
+Gui.F_PartType.frmNewPartType.Create(Frame)
+Gui.F_PartType.frmNewPartType.Size(6540,1500)
+Gui.F_PartType.frmNewPartType.Position(75,105)
+Gui.F_PartType.frmNewPartType.Enabled(True)
+Gui.F_PartType.frmNewPartType.Visible(True)
+Gui.F_PartType.frmNewPartType.Zorder(0)
+Gui.F_PartType.frmNewPartType.Caption("")
+Gui.F_PartType.frmNewPartType.FontName("Tahoma")
+Gui.F_PartType.frmNewPartType.FontSize(8.25)
+Gui.F_PartType.lbl1.Create(Label,"Part Type",True,915,300,0,1335,240,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_PartType.lbl1.Parent("frmNewPartType")
+Gui.F_PartType.lbl1.BorderStyle(0)
+Gui.F_PartType.lbl2.Create(Label,"Part Prefix",True,915,300,0,2430,240,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_PartType.lbl2.Parent("frmNewPartType")
+Gui.F_PartType.lbl2.BorderStyle(0)
+Gui.F_PartType.lbl3.Create(Label,"Part Description Template",True,2115,300,0,3525,240,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_PartType.lbl3.Parent("frmNewPartType")
+Gui.F_PartType.lbl3.BorderStyle(0)
+Gui.F_PartType.txt_PT_PartType.Create(TextBox,"",True,930,300,0,1350,525,True,0,"Arial",8,-2147483643,1)
+Gui.F_PartType.txt_PT_PartType.Parent("frmNewPartType")
+Gui.F_PartType.txt_PT_PartType.MaxLength(5)
+Gui.F_PartType.lbl4.Create(Label,"Part Class",True,915,300,0,180,240,True,0,"Arial",8,-2147483633,0,0)
+Gui.F_PartType.lbl4.Parent("frmNewPartType")
+Gui.F_PartType.lbl4.BorderStyle(0)
+Gui.F_PartType.txt_PT_PartPrefix.Create(TextBox,"",True,930,300,0,2445,525,True,0,"Arial",8,-2147483643,1)
+Gui.F_PartType.txt_PT_PartPrefix.Parent("frmNewPartType")
+Gui.F_PartType.txt_PT_PartPrefix.MaxLength(5)
+Gui.F_PartType.txt_PT_Description.Create(TextBox,"",True,2880,300,0,3540,525,True,0,"Arial",8,-2147483643,1)
+Gui.F_PartType.txt_PT_Description.Parent("frmNewPartType")
+Gui.F_PartType.txt_PT_Description.MaxLength(30)
+Gui.F_PartType.ddl1.Create(DropDownList)
+Gui.F_PartType.ddl1.Size(1095,330)
+Gui.F_PartType.ddl1.Position(135,510)
+Gui.F_PartType.ddl1.Parent("frmNewPartType")
+Gui.F_PartType.ddl1.Enabled(True)
+Gui.F_PartType.ddl1.Visible(True)
+Gui.F_PartType.ddl1.Zorder(0)
+Gui.F_PartType.ddl1.FontName("Tahoma")
+Gui.F_PartType.ddl1.FontSize(8.25)
+Gui.F_PartType.cmdSavePartType.Create(Button)
+Gui.F_PartType.cmdSavePartType.Size(2445,375)
+Gui.F_PartType.cmdSavePartType.Position(2085,960)
+Gui.F_PartType.cmdSavePartType.Parent("frmNewPartType")
+Gui.F_PartType.cmdSavePartType.Caption("Save")
+Gui.F_PartType.cmdSavePartType.Event(Click,cmdSavePartType_Click)
+Gui.F_PartType.cmdSavePartType.Enabled(True)
+Gui.F_PartType.cmdSavePartType.Visible(True)
+Gui.F_PartType.cmdSavePartType.Zorder(0)
+Gui.F_PartType.cmdSavePartType.FontName("Tahoma")
+Gui.F_PartType.cmdSavePartType.FontSize(8.25)
+Gui.F_Export..Create(BaseForm)
+Gui.F_Export..Caption("Export")
+Gui.F_Export..Size(4965,2340)
+Gui.F_Export..MinX(0)
+Gui.F_Export..MinY(0)
+Gui.F_Export..Position(0,0)
+Gui.F_Export..AlwaysOnTop(False)
+Gui.F_Export..FontName("Tahoma")
+Gui.F_Export..FontSize(8.25)
+Gui.F_Export..ControlBox(True)
+Gui.F_Export..MaxButton(False)
+Gui.F_Export..MinButton(True)
+Gui.F_Export..MousePointer(0)
+Gui.F_Export..Moveable(True)
+Gui.F_Export..Sizeable(False)
+Gui.F_Export..ShowInTaskBar(True)
+Gui.F_Export..TitleBar(True)
+Gui.F_Export..Event(UnLoad,F_Export_UnLoad)
+Gui.F_Export.frmExport.Create(Frame)
+Gui.F_Export.frmExport.Enabled(True)
+Gui.F_Export.frmExport.Visible(True)
+Gui.F_Export.frmExport.Zorder(0)
+Gui.F_Export.frmExport.Size(4845,1725)
+Gui.F_Export.frmExport.Position(75,90)
+Gui.F_Export.frmExport.Caption("Export")
+Gui.F_Export.frmExport.FontName("Tahoma")
+Gui.F_Export.frmExport.FontSize(8.25)
+Gui.F_Export.frmExport.BorderStyle(1)
+Gui.F_Export.lbl1.Create(Label,"Export Location",True,1125,195,0,75,450,True,0,"Tahoma",8.25,,0,0)
+Gui.F_Export.lbl1.BorderStyle(0)
+Gui.F_Export.lbl1.Parent("frmExport")
+Gui.F_Export.txtExpLoc.Create(TextBox,"",True,4305,300,0,75,690,True,0,"Tahoma",8.25,,1)
+Gui.F_Export.txtExpLoc.Parent("frmExport")
+Gui.F_Export.cmdLocBrw.Create(Button)
+Gui.F_Export.cmdLocBrw.Enabled(True)
+Gui.F_Export.cmdLocBrw.Visible(True)
+Gui.F_Export.cmdLocBrw.Zorder(0)
+Gui.F_Export.cmdLocBrw.Size(345,345)
+Gui.F_Export.cmdLocBrw.Position(4425,675)
+Gui.F_Export.cmdLocBrw.Caption("^")
+Gui.F_Export.cmdLocBrw.FontName("Tahoma")
+Gui.F_Export.cmdLocBrw.FontSize(8.25)
+Gui.F_Export.cmdLocBrw.Parent("frmExport")
+Gui.F_Export.cmdLocBrw.Event(Click,cmdLocBrw_Click)
+Gui.F_Export.ddl1.Create(DropDownList)
+Gui.F_Export.ddl1.Enabled(True)
+Gui.F_Export.ddl1.Visible(True)
+Gui.F_Export.ddl1.Zorder(0)
+Gui.F_Export.ddl1.Size(1500,300)
+Gui.F_Export.ddl1.Position(75,1320)
+Gui.F_Export.ddl1.FontName("Tahoma")
+Gui.F_Export.ddl1.FontSize(8.25)
+Gui.F_Export.ddl1.Parent("frmExport")
+Gui.F_Export.lbl2.Create(Label,"Order 1",True,555,195,0,90,1065,True,0,"Tahoma",8.25,,0,0)
+Gui.F_Export.lbl2.BorderStyle(0)
+Gui.F_Export.lbl2.Parent("frmExport")
+Gui.F_Export.lbl3.Create(Label,"Order 2",True,555,195,0,1830,1065,True,0,"Tahoma",8.25,,0,0)
+Gui.F_Export.lbl3.BorderStyle(0)
+Gui.F_Export.lbl3.Parent("frmExport")
+Gui.F_Export.ddl2.Create(DropDownList)
+Gui.F_Export.ddl2.Enabled(True)
+Gui.F_Export.ddl2.Visible(True)
+Gui.F_Export.ddl2.Zorder(0)
+Gui.F_Export.ddl2.Size(1500,300)
+Gui.F_Export.ddl2.Position(1800,1320)
+Gui.F_Export.ddl2.FontName("Tahoma")
+Gui.F_Export.ddl2.FontSize(8.25)
+Gui.F_Export.ddl2.Parent("frmExport")
+Gui.F_Export.cmdGridExport.Create(Button)
+Gui.F_Export.cmdGridExport.Enabled(True)
+Gui.F_Export.cmdGridExport.Visible(True)
+Gui.F_Export.cmdGridExport.Zorder(0)
+Gui.F_Export.cmdGridExport.Size(1125,345)
+Gui.F_Export.cmdGridExport.Position(3660,1305)
+Gui.F_Export.cmdGridExport.Caption("Export")
+Gui.F_Export.cmdGridExport.FontName("Tahoma")
+Gui.F_Export.cmdGridExport.FontSize(8.25)
+Gui.F_Export.cmdGridExport.Parent("frmExport")
+Gui.F_Export.cmdGridExport.Event(Click,cmdGridExport_Click)
+Gui.F_Export.GsGcExport.Create(GsGridControl)
+Gui.F_Export.GsGcExport.Enabled(True)
+Gui.F_Export.GsGcExport.Visible(False)
+Gui.F_Export.GsGcExport.Zorder(0)
+Gui.F_Export.GsGcExport.Size(4845,915)
+Gui.F_Export.GsGcExport.Position(120,1965)
+Gui.F_NewPart..Create(BaseForm)
+Gui.F_NewPart..Caption("New Part")
+Gui.F_NewPart..Size(5010,1335)
+Gui.F_NewPart..MinX(0)
+Gui.F_NewPart..MinY(0)
+Gui.F_NewPart..Position(0,0)
+Gui.F_NewPart..AlwaysOnTop(False)
+Gui.F_NewPart..FontName("Tahoma")
+Gui.F_NewPart..FontSize(8.25)
+Gui.F_NewPart..ControlBox(True)
+Gui.F_NewPart..MaxButton(False)
+Gui.F_NewPart..MinButton(True)
+Gui.F_NewPart..MousePointer(0)
+Gui.F_NewPart..Moveable(True)
+Gui.F_NewPart..Sizeable(False)
+Gui.F_NewPart..ShowInTaskBar(True)
+Gui.F_NewPart..TitleBar(True)
+Gui.F_NewPart..Event(UnLoad,F_NewPart_UnLoad)
+Gui.F_NewPart.frmNewPart.Create(Frame)
+Gui.F_NewPart.frmNewPart.Enabled(True)
+Gui.F_NewPart.frmNewPart.Visible(True)
+Gui.F_NewPart.frmNewPart.Zorder(0)
+Gui.F_NewPart.frmNewPart.Size(4875,720)
+Gui.F_NewPart.frmNewPart.Position(75,75)
+Gui.F_NewPart.frmNewPart.Caption("")
+Gui.F_NewPart.frmNewPart.FontName("Tahoma")
+Gui.F_NewPart.frmNewPart.FontSize(8.25)
+Gui.F_NewPart.lbl1.Create(Label,"Part Class",True,720,195,0,75,75,True,0,"Tahoma",8.25,,0,0)
+Gui.F_NewPart.lbl1.BorderStyle(0)
+Gui.F_NewPart.lbl1.Parent("frmNewPart")
+Gui.F_NewPart.txtPartClass.Create(TextBox,"",True,1005,300,0,45,300,True,0,"Tahoma",8.25,,1)
+Gui.F_NewPart.txtPartClass.Parent("frmNewPart")
+Gui.F_NewPart.txtPartType.Create(TextBox,"",True,1005,300,0,1110,300,True,0,"Tahoma",8.25,,1)
+Gui.F_NewPart.txtPartType.Parent("frmNewPart")
+Gui.F_NewPart.lbl2.Create(Label,"Part Type",True,705,195,0,1140,75,True,0,"Tahoma",8.25,,0,0)
+Gui.F_NewPart.lbl2.BorderStyle(0)
+Gui.F_NewPart.lbl2.Parent("frmNewPart")
+Gui.F_NewPart.txtPartPrefix.Create(TextBox,"",True,1005,300,0,2190,300,True,0,"Tahoma",8.25,,1)
+Gui.F_NewPart.txtPartPrefix.Parent("frmNewPart")
+Gui.F_NewPart.lbl3.Create(Label,"Part Prefix",True,765,195,0,2220,75,True,0,"Tahoma",8.25,,0,0)
+Gui.F_NewPart.lbl3.BorderStyle(0)
+Gui.F_NewPart.lbl3.Parent("frmNewPart")
+Gui.F_NewPart.cmdClassTypeBrw.Create(Button)
+Gui.F_NewPart.cmdClassTypeBrw.Enabled(True)
+Gui.F_NewPart.cmdClassTypeBrw.Visible(True)
+Gui.F_NewPart.cmdClassTypeBrw.Zorder(0)
+Gui.F_NewPart.cmdClassTypeBrw.Size(345,345)
+Gui.F_NewPart.cmdClassTypeBrw.Position(3345,330)
+Gui.F_NewPart.cmdClassTypeBrw.Caption("^")
+Gui.F_NewPart.cmdClassTypeBrw.FontName("Tahoma")
+Gui.F_NewPart.cmdClassTypeBrw.FontSize(8.25)
+Gui.F_NewPart.cmdClassTypeBrw.Event(Click,cmdClassTypeBrw_Click)
+Gui.F_NewPart.cmdCreateNew.Create(Button)
+Gui.F_NewPart.cmdCreateNew.Enabled(True)
+Gui.F_NewPart.cmdCreateNew.Visible(True)
+Gui.F_NewPart.cmdCreateNew.Zorder(0)
+Gui.F_NewPart.cmdCreateNew.Size(1125,345)
+Gui.F_NewPart.cmdCreateNew.Position(3750,330)
+Gui.F_NewPart.cmdCreateNew.Caption("Create Part")
+Gui.F_NewPart.cmdCreateNew.FontName("Tahoma")
+Gui.F_NewPart.cmdCreateNew.FontSize(8.25)
+Gui.F_NewPart.cmdCreateNew.Event(Click,cmdCreateNew_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.External.Include.Library("GCG_5787_Part_Generator_new.lib")
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+f.Intrinsic.Control.Try
+'Try something
+	f.Intrinsic.Control.CallSub(createDisplayDT)
+	f.Intrinsic.Control.CallSub(loadGridProperties)
+	gui.F_Maintenance..Show
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.ErrorMsg.Start
+v.Local.sError.Declare
+
+'Closes ODBC connection, default to connection : "con"
+f.Intrinsic.Control.If(v.ODBC!con.State, =, 1)
+	f.ODBC.Connection!con.Close
+f.Intrinsic.Control.EndIf
+
+'Generic Error message.
+f.Intrinsic.String.Build("Project GCGC_5787_Part_Class_Maint_New.g2u {0}{0}Subroutine: {1}{0}Error: {2} with Description: {3}", v.Ambient.NewLine, v.Args.CurrentSub, v.Ambient.ErrorNumber, v.Ambient.ErrorDescription, v.Local.sError)
+f.Intrinsic.UI.Msgbox(v.Local.sError)
+Program.Sub.ErrorMsg.End
+
+Program.Sub.createDisplayDT.Start
+f.Intrinsic.Control.Try
+	'Load tables.
+	f.ODBC.Connection!con.OpenCompanyConnection
+	 	f.Data.DataTable.CreateFromSQL("displayClassDT", "con", "Select * from GCG_5787_PART_CLASS", true)
+	 	f.Data.DataTable.CreateFromSQL("displayTypeDT", "con", "Select * from GCG_5787_PART_TYPE", true)
+	f.ODBC.Connection!con.Close
+	'Create display table for part class
+	f.Data.DataView.Create("displayClassDT", "displayClassDV", 22)
+	gui.F_Maintenance.GsGcPartClass.AddGridviewFromDataview("displayClassGV", "displayClassDT", "displayClassDV")
+	gui.F_Maintenance.GsGcPartClass.MainView("displayClassGV")
+	'Create display table for part Type
+	f.Data.DataView.Create("displayTypeDT", "displayTypeDV", 22)
+	gui.F_Maintenance.GsGcPartType.AddGridviewFromDataview("displayTypeGV", "displayTypeDT", "displayTypeDV")
+	gui.F_Maintenance.GsGcPartType.MainView("displayTypeGV")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.createDisplayDT.End
+
+Program.Sub.loadGridProperties.Start
+v.Local.iCnt.Declare
+v.Local.sFields.Declare
+f.Intrinsic.Control.Try
+	'Load Properties for Part Class
+	f.Intrinsic.String.Split(v.DataTable.displayClassDT.FieldNames, "*!*", v.Local.sFields)
+	f.Intrinsic.Control.For(v.Local.iCnt, 0, v.Local.sFields.UBound, 1)
+		gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", v.Local.sFields(v.Local.iCnt), "HeaderFontBold", True)
+		gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", v.Local.sFields(v.Local.iCnt), "Visible", True)
+		gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", v.Local.sFields(v.Local.iCnt), "ReadOnly", True)
+		gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", v.Local.sFields(v.Local.iCnt), "AllowEdit", False)
+		gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", v.Local.sFields(v.Local.iCnt), "HeaderHAlignment", "Near")
+		gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", v.Local.sFields(v.Local.iCnt), "CellHAlignment", "Near")
+		gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", v.Local.sFields(v.Local.iCnt), "HeaderBackColor", v.Color.GSS)
+		gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", v.Local.sFields(v.Local.iCnt), "HeaderForeColor", v.Color.White)
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+	
+	'Captions
+	gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", "CLASS_ID", "Caption", "Class")
+	gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", "CLASS_DESC", "Caption", "Description")
+	gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", "CLASS_SPEC", "Caption", "Quality Specification")
+	
+	'gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", "Default", "ReadOnly", False)
+	'gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", "Default", "AllowEdit", True)
+	'gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", "Default", "HeaderHAlignment", "Center")
+	'gui.F_Maintenance.GsGcPartClass.SetColumnProperty("displayClassGV", "Default", "CellHAlignment", "Center")
+	
+	'Load Properties for Part Type
+	f.Intrinsic.String.Split(v.DataTable.displayTypeDT.FieldNames, "*!*", v.Local.sFields)
+	f.Intrinsic.Control.For(v.Local.iCnt, 0, v.Local.sFields.UBound, 1)
+		gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", v.Local.sFields(v.Local.iCnt), "HeaderFontBold", True)
+		gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", v.Local.sFields(v.Local.iCnt), "Visible", True)
+		gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", v.Local.sFields(v.Local.iCnt), "ReadOnly", True)
+		gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", v.Local.sFields(v.Local.iCnt), "AllowEdit", False)
+		gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", v.Local.sFields(v.Local.iCnt), "HeaderHAlignment", "Near")
+		gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", v.Local.sFields(v.Local.iCnt), "CellHAlignment", "Near")
+		gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", v.Local.sFields(v.Local.iCnt), "HeaderBackColor", v.Color.GSS)
+		gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", v.Local.sFields(v.Local.iCnt), "HeaderForeColor", v.Color.White)
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+	
+	'Captions
+	gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", "CLASS_ID", "Caption", "Class")
+	gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", "TYPE_ID", "Caption", "Type")
+	gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", "PART_PREFIX", "Caption", "Part Prefix")
+	gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", "PART_TEMPLATE_DESC", "Caption", "Template Description")
+	
+	'gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", "Default", "ReadOnly", False)
+	'gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", "Default", "AllowEdit", True)
+	'gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", "Default", "HeaderHAlignment", "Center")
+	'gui.F_Maintenance.GsGcPartType.SetColumnProperty("displayTypeGV", "Default", "CellHAlignment", "Center")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadGridProperties.End
+
+Program.Sub.cmdNewClass_Click.Start
+f.Intrinsic.Control.Try
+	f.Intrinsic.Control.CallSub(clearPartClass)
+	gui.F_PartClass..Visible(true)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdNewClass_Click.End
+
+Program.Sub.clearPartClass.Start
+f.Intrinsic.Control.Try
+	gui.F_PartClass.txt_PC_PartClass.Text("")
+	gui.F_PartClass.txt_PC_Description.Text("")
+	gui.F_PartClass.txt_PC_Quality.Text("")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.clearPartClass.End
+
+Program.Sub.F_PartClass_UnLoad.Start
+f.Intrinsic.Control.Try
+	gui.F_PartClass..Visible(false)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.F_PartClass_UnLoad.End
+
+Program.Sub.cmdSaveNewClass_Click.Start
+v.Local.sPartClass.Declare
+v.Local.sDescription.Declare
+v.Local.sQuality.Declare
+
+v.Local.sSQL.Declare
+f.Intrinsic.Control.Try
+	'Set variables with information from textboxes
+	v.Local.sPartClass.Set(v.Screen.F_PartClass!txt_PC_PartClass.Text)
+	v.Local.sDescription.Set(v.Screen.F_PartClass!txt_PC_Description.Text)
+	v.Local.sQuality.Set(v.Screen.F_PartClass!txt_PC_Quality.Text)
+	
+	'Check for empty data.
+	'Check part class is unique
+	'Save into datatable.
+	f.Intrinsic.String.Build("Insert into  GCG_5787_PART_CLASS (CLASS_ID, CLASS_DESC, CLASS_SPEC) Values ('{0}', '{1}', '{2}')", v.Local.sPartClass, v.Local.sDescription, v.Local.sQuality, v.Local.sSQL)
+	f.ODBC.Connection!con.OpenCompanyConnection
+	 	f.ODBC.Connection!con.Execute(v.Local.sSQL)
+	f.ODBC.Connection!con.Close
+	'Empty Text Fields
+	gui.F_PartClass.txt_PC_PartClass.Text("")
+	gui.F_PartClass.txt_PC_Description.Text("")
+	gui.F_PartClass.txt_PC_Quality.Text("")
+	'Reload Tables.
+	f.Intrinsic.Control.CallSub(reloadTables)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdSaveNewClass_Click.End
+
+Program.Sub.reloadTables.Start
+f.Intrinsic.Control.Try
+'Load tables.
+	f.ODBC.Connection!con.OpenCompanyConnection
+	 	f.Data.DataTable.CreateFromSQL("tmpDisplayClassDT", "con", "Select * from GCG_5787_PART_CLASS", true)
+	 	f.Data.DataTable.CreateFromSQL("tmpDisplayTypeDT", "con", "Select * from GCG_5787_PART_TYPE", true)
+	f.ODBC.Connection!con.Close
+	'Merge Table Part Class
+	f.Data.DataTable.DeleteRow("displayClassDT")
+	f.Data.DataTable.AcceptChanges("displayClassDT")
+	f.Data.DataTable.Merge("tmpDisplayClassDT", "displayClassDT", false, 2)
+	f.Data.DataTable.Close("tmpDisplayClassDT")
+	'Merge Table Part Type
+	f.Data.DataTable.DeleteRow("displayTypeDT")
+	f.Data.DataTable.AcceptChanges("displayTypeDT")
+	f.Data.DataTable.Merge("tmpDisplayTypeDT", "displayTypeDT", false, 2)
+	f.Data.DataTable.Close("tmpDisplayTypeDT")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.reloadTables.End
+
+Program.Sub.F_Maintenance_UnLoad.Start
+f.Intrinsic.Control.Try
+	f.Intrinsic.Control.End
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.F_Maintenance_UnLoad.End
+
+Program.Sub.cmdNewType_Click.Start
+v.Local.sRet.Declare
+v.Local.iCnt.Declare
+f.Intrinsic.Control.Try
+	'Get Classes
+	f.ODBC.Connection!con.OpenCompanyConnection
+	 	f.ODBC.Connection!con.ExecuteAndReturn("Select distinct class_id from GCG_5787_PART_CLASS", v.Local.sRet)
+	f.ODBC.Connection!con.Close
+	'Split return to get an Array
+	f.Intrinsic.String.Split(v.Local.sRet, "#$#", v.Local.sRet)
+	'Clean Dropdown
+	gui.F_PartType.ddl1.ClearItems
+	'Loop through array
+	f.Intrinsic.Control.For(v.Local.iCnt,  0, v.Local.sRet.UBound, 1)
+		gui.F_PartType.ddl1.AddItem(v.Local.sRet(v.Local.iCnt))
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+	
+	gui.F_PartType..Visible(True)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdNewType_Click.End
+
+Program.Sub.F_PartType_UnLoad.Start
+f.Intrinsic.Control.Try
+	gui.F_PartType..Visible(False)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.F_PartType_UnLoad.End
+
+Program.Sub.cmdSavePartType_Click.Start
+v.Local.sPartClass.Declare
+v.Local.sPartType.Declare
+v.Local.sPartPrefix.Declare
+v.Local.sTemplate_Desc.Declare
+
+v.Local.sSQL.Declare
+f.Intrinsic.Control.Try
+	'Set variables with information from textboxes
+	v.Local.sPartClass.Set(v.Screen.F_PartType!ddl1.Value)
+	v.Local.sPartType.Set(v.Screen.F_PartType!txt_PT_PartType.Text)
+	v.Local.sPartPrefix.Set(v.Screen.F_PartType!txt_PT_PartPrefix.Text)
+	v.Local.sTemplate_Desc.Set(v.Screen.F_PartType!txt_PT_Description.Text)
+	
+	'Check for empty data.
+	'Check part class is unique
+	'Save into datatable.
+	f.Intrinsic.String.Build("Insert into  GCG_5787_PART_TYPE (CLASS_ID, TYPE_ID, PART_PREFIX, PART_TEMPLATE_DESC) Values ('{0}', '{1}', '{2}', '{3}')", v.Local.sPartClass, v.Local.sPartType, v.Local.sPartPrefix, v.Local.sTemplate_Desc, v.Local.sSQL)
+	f.ODBC.Connection!con.OpenCompanyConnection
+	 	f.ODBC.Connection!con.Execute(v.Local.sSQL)
+	f.ODBC.Connection!con.Close
+	'Empty Text Fields
+	'gui.F_PartType.ddl1.Value(-1)
+	gui.F_PartType.txt_PT_PartType.Text("")
+	gui.F_PartType.txt_PT_Description.Text("")
+	gui.F_PartType.txt_PT_PartPrefix.Text("")
+	'Reload Tables.
+	f.Intrinsic.Control.CallSub(reloadTables)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdSavePartType_Click.End
+
+Program.Sub.GsGcPartClass_RowClick.Start
+v.Local.sPartClass.Declare
+v.Local.sDescription.Declare
+v.Local.sQuality.Declare
+v.Local.sFilter.Declare
+f.Intrinsic.Control.Try
+	'Set Variables.
+	v.Local.sPartClass.Set(v.DataTable.displayClassDT(v.Args.RowIndex).CLASS_ID!FieldValTrim)
+	v.Local.sDescription.Set(v.DataTable.displayClassDT(v.Args.RowIndex).CLASS_DESC!FieldValTrim)
+	v.Local.sQuality.Set(v.DataTable.displayClassDT(v.Args.RowIndex).CLASS_SPEC!FieldValTrim)
+	'Filter Dataview.
+	f.Intrinsic.String.Build("Class_ID = '{0}'", v.Local.sPartClass, v.Local.sFilter)
+	f.Data.DataView.SetFilter("displayTypeDT", "displayTypeDV", v.Local.sFilter)
+	'Set Textboxes
+	gui.F_Maintenance.txt_M_PartClass.Text(v.Local.sPartClass)
+	gui.F_Maintenance.txt_M_ClassDesc.Text(v.Local.sDescription)
+	gui.F_Maintenance.txt_M_Quality.Text(v.Local.sQuality)
+	'Clear Type TextBoxes
+	gui.F_Maintenance.txt_M_PartType.Text("")
+	gui.F_Maintenance.txt_M_PartPrefix.Text("")
+	gui.F_Maintenance.txt_M_DescTemplate.Text("")
+	'Clear Defaults
+	f.Intrinsic.Control.CallSub(ClearDefaultTxts)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.GsGcPartClass_RowClick.End
+
+Program.Sub.GsGcPartType_RowClick.Start
+v.Local.sPartClass.Declare
+v.Local.sPartType.Declare
+v.Local.sPartPrefix.Declare
+v.Local.sTemplateDesc.Declare
+v.Local.sFilter.Declare
+v.Local.sSQL.Declare
+v.Local.sDescription.Declare
+v.Local.sQuality.Declare
+
+f.Intrinsic.Control.Try
+	f.Intrinsic.Control.CallSub(ClearDefaultTxts)
+	'Set Variables.
+	v.Local.sPartClass.Set(v.DataTable.displayTypeDT(v.Args.RowIndex).CLASS_ID!FieldValTrim)
+	v.Local.sPartType.Set(v.DataTable.displayTypeDT(v.Args.RowIndex).TYPE_ID!FieldValTrim)
+	v.Local.sPartPrefix.Set(v.DataTable.displayTypeDT(v.Args.RowIndex).PART_PREFIX!FieldValTrim)
+	v.Local.sTemplateDesc.Set(v.DataTable.displayTypeDT(v.Args.RowIndex).PART_TEMPLATE_DESC!FieldValTrim)
+
+	'Set Textboxes
+	gui.F_Maintenance.txt_M_PartType.Text(v.Local.sPartType)
+	gui.F_Maintenance.txt_M_PartPrefix.Text(v.Local.sPartPrefix)
+	gui.F_Maintenance.txt_M_DescTemplate.Text(v.Local.sTemplateDesc)
+	
+	'Get Class Infor.
+	f.Intrinsic.String.Build("Class_ID = '{0}'", v.Local.sPartClass, v.Local.sFilter)
+	f.Data.DataView.Create("displayClassDT", "tempClassDV", 22, v.Local.sFilter, "")
+	f.Intrinsic.Control.If(v.DataView.displayClassDT!tempClassDV.RowCount, =, 1)
+		v.Local.sDescription.Set(v.DataView.displayClassDT!tempClassDV(0).CLASS_DESC!FieldValTrim)
+		v.Local.sQuality.Set(v.DataView.displayClassDT!tempClassDV(0).CLASS_SPEC!FieldValTrim)
+	f.Intrinsic.Control.EndIf
+	f.Data.DataView.Close("displayClassDT", "tempClassDV")
+	
+	'Set Textboxes
+	gui.F_Maintenance.txt_M_PartClass.Text(v.Local.sPartClass)
+	gui.F_Maintenance.txt_M_ClassDesc.Text(v.Local.sDescription)
+	gui.F_Maintenance.txt_M_Quality.Text(v.Local.sQuality)
+	
+	'Get Defaults from Datable.
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select * from GCG_5787_CLASS_TYPE where Class_ID = '{0}' and Type_ID = '{1}'", v.Local.sPartClass.Trim, v.Local.sPartType.Trim, v.Local.sSQL)
+	 	f.Data.DataTable.CreateFromSQL("tempDefaultsDT", "con", v.Local.sSQL)
+	f.ODBC.Connection!con.Close
+
+	'get data from DT into Textboxes.
+	f.Intrinsic.Control.If(v.DataTable.tempDefaultsDT.RowCount, =, 1)
+		gui.F_Maintenance.txt_D_StkUoM.Text(v.DataTable.tempDefaultsDT(0).INV_UM!FieldValTrim)
+		gui.F_Maintenance.txt_D_Purch_UoM.Text(v.DataTable.tempDefaultsDT(0).PURCH_UM!FieldValTrim)
+		gui.F_Maintenance.txt_D_Package.Text(v.DataTable.tempDefaultsDT(0).PACKAGING!FieldValTrim)
+		gui.F_Maintenance.txt_D_ABC.Text(v.DataTable.tempDefaultsDT(0).ABC!FieldValTrim)
+		gui.F_Maintenance.txt_D_RunScrap.Text(v.DataTable.tempDefaultsDT(0).RUNSCRAP!FieldValTrim)
+		gui.F_Maintenance.txt_D_SetupScrap.Text(v.DataTable.tempDefaultsDT(0).SETUP_QTY!FieldValTrim)		
+		gui.F_Maintenance.txt_D_OrderQty.Text(v.DataTable.tempDefaultsDT(0).ORDER_QTY!FieldValTrim)
+		gui.F_Maintenance.txt_D_SafetyQty.Text(v.DataTable.tempDefaultsDT(0).SAFETY_STOCK!FieldValTrim)
+		gui.F_Maintenance.txt_D_ReorderPoint.Text(v.DataTable.tempDefaultsDT(0).REORDERPOINT!FieldValTrim)
+		gui.F_Maintenance.txt_D_Buyer.Text(v.DataTable.tempDefaultsDT(0).BUYER!FieldValTrim)
+		gui.F_Maintenance.txt_D_LeadDays.Text(v.DataTable.tempDefaultsDT(0).LEAD_DAYS!FieldValTrim)
+		gui.F_Maintenance.txt_D_AmtCost.Text(v.DataTable.tempDefaultsDT(0).AMT_COST!FieldValTrim)
+		gui.F_Maintenance.txt_D_MRC.Text(v.DataTable.tempDefaultsDT(0).MRC!FieldValTrim)
+		gui.F_Maintenance.txt_D_Certification.Text(v.DataTable.tempDefaultsDT(0).CERTIFICATION!FieldValTrim)
+		gui.F_Maintenance.txt_D_Sensitive.Text(v.DataTable.tempDefaultsDT(0).SENSITIVE!FieldValTrim)
+		gui.F_Maintenance.txt_D_Documentation.Text(v.DataTable.tempDefaultsDT(0).DOCUMENTATION!FieldValTrim)
+		gui.F_Maintenance.txt_D_NCNR.Text(v.DataTable.tempDefaultsDT(0).NCNR!FieldValTrim)
+		gui.F_Maintenance.chk1.Value(v.DataTable.tempDefaultsDT(0).INSPECTION_REQ!FieldValTrim)
+		gui.F_Maintenance.chk2.Value(v.DataTable.tempDefaultsDT(0).CERTIFICATE_REQ!FieldValTrim)
+	f.Intrinsic.Control.EndIf
+	
+	'Close temp DT.
+	f.Data.DataTable.Close("tempDefaultsDT")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.GsGcPartType_RowClick.End
+
+Program.Sub.cmdSaveDefault_Click.Start
+v.Local.sClassId.Declare
+v.Local.sTypeID.Declare
+v.Local.sPrefixChar.Declare
+v.Local.sDescTemplate.Declare
+v.Local.sInv_UM.Declare
+v.Local.sPurch_UM.Declare
+v.Local.sPackage.Declare
+v.Local.sABC.Declare
+v.Local.fRunScrap.Declare
+v.Local.iSetupQty.Declare
+v.Local.iOrderQty.Declare
+v.Local.iSafetyStock.Declare
+v.Local.iReorderPoint.Declare
+v.Local.sBuyer.Declare
+v.Local.iLeadDays.Declare
+v.Local.fAmtCost.Declare
+v.Local.sCertType.Declare
+v.Local.sMRC.Declare
+v.Local.sNCNR.Declare
+v.Local.sDocumentation.Declare
+v.Local.sSensitive.Declare
+
+v.Local.iInspection.Declare
+v.Local.iCertificate.Declare
+f.Intrinsic.Control.Try
+	'get empty dt for column structure.
+	f.ODBC.Connection!con.OpenCompanyConnection
+	 	f.Data.DataTable.CreateFromSQL("tmpSaveDT", "con", "Select * from GCG_5787_CLASS_TYPE where Class_ID = '{0}' and Type_ID = '{1}'")
+	f.ODBC.Connection!con.Close
+	
+	'Set Values to Variables.
+	v.Local.sClassId.Set(v.Screen.F_Maintenance!txt_M_PartClass.Text)
+	v.Local.sTypeID.Set(v.Screen.F_Maintenance!txt_M_PartType.Text)
+	v.Local.sPrefixChar.Set(v.Screen.F_Maintenance!txt_M_PartPrefix.Text)
+	v.Local.sDescTemplate.Set(v.Screen.F_Maintenance!txt_M_DescTemplate.Text)
+	v.Local.sInv_UM.Set(v.Screen.F_Maintenance!txt_D_StkUoM.Text)
+	v.Local.sPurch_UM.Set(v.Screen.F_Maintenance!txt_D_Purch_UoM.Text)
+	v.Local.sPackage.Set(v.Screen.F_Maintenance!txt_D_Package.Text)
+	v.Local.sABC.Set(v.Screen.F_Maintenance!txt_D_ABC.Text)
+	v.Local.fRunScrap.Set(v.Screen.F_Maintenance!txt_D_RunScrap.Text)
+	v.Local.iSetupQty.Set(v.Screen.F_Maintenance!txt_D_SetupScrap.Text)
+	v.Local.iOrderQty.Set(v.Screen.F_Maintenance!txt_D_OrderQty.Text)
+	v.Local.iSafetyStock.Set(v.Screen.F_Maintenance!txt_D_SafetyQty.Text)
+	v.Local.iReorderPoint.Set(v.Screen.F_Maintenance!txt_D_ReorderPoint.Text)
+	v.Local.sBuyer.Set(v.Screen.F_Maintenance!txt_D_Buyer.Text)
+	v.Local.iLeadDays.Set(v.Screen.F_Maintenance!txt_D_LeadDays.Text)
+	v.Local.fAmtCost.Set(v.Screen.F_Maintenance!txt_D_AmtCost.Text)
+	v.Local.sMRC.Set(v.Screen.F_Maintenance!txt_D_MRC.Text)
+	v.Local.sCertType.Set(v.Screen.F_Maintenance!txt_D_Certification.Text)
+	v.Local.sSensitive.Set(v.Screen.F_Maintenance!txt_D_Sensitive.Text)
+	v.Local.sDocumentation.Set(v.Screen.F_Maintenance!txt_D_Documentation.Text)
+	v.Local.sNCNR.Set(v.Screen.F_Maintenance!txt_D_NCNR.Text)
+	v.Local.iInspection.Set(v.Screen.F_Maintenance!chk1.Value)
+	v.Local.iCertificate.Set(v.Screen.F_Maintenance!chk2.Value)
+	
+	'Add new row to temp save DT
+	f.Data.DataTable.DeleteRow("tmpSaveDT")
+	f.Data.DataTable.AcceptChanges("tmpSaveDT")
+	f.Data.DataTable.AddRow("tmpSaveDT", "Class_ID", v.Local.sClassId.Trim, "TYPE_ID", v.Local.sTypeID.Trim, "PREFIX_CHAR", v.Local.sPrefixChar.Trim, "DESC_TEMPLATE", v.Local.sDescTemplate.Trim, "INV_UM", v.Local.sInv_UM.Trim, "PURCH_UM", v.Local.sPurch_UM.Trim, "PACKAGING", v.Local.sPackage.Trim, "ABC", v.Local.sABC.Trim, "RUNSCRAP", v.Local.fRunScrap, "SETUP_QTY", v.Local.iSetupQty, "ORDER_QTY", v.Local.iOrderQty, "SAFETY_STOCK", v.Local.iSafetyStock, "REORDERPOINT", v.Local.iReorderPoint, "BUYER", v.Local.sBuyer.Trim, "LEAD_DAYS", v.Local.iLeadDays, "AMT_COST", v.Local.fAmtCost, "INSPECTION_REQ", v.Local.iInspection, "CERTIFICATE_REQ", v.Local.iCertificate, "MRC", v.Local.sMRC, "NCNR", v.Local.sNCNR, "SENSITIVE", v.Local.sSensitive, "Documentation", v.Local.sDocumentation, "CERTIFICATION", v.Local.sCertType)
+	'save temp DT to Databse
+	f.ODBC.Connection!con.OpenCompanyConnection
+	 	f.Data.DataTable.SaveToDB("tmpSaveDT", "con", "GCG_5787_CLASS_TYPE", "CLASS_ID*!*TYPE_ID", 256)
+	f.ODBC.Connection!con.Close
+	
+	f.Intrinsic.UI.Msgbox("Save Complete")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdSaveDefault_Click.End
+
+Program.Sub.ClearDefaultTxts.Start
+f.Intrinsic.Control.Try
+	gui.F_Maintenance.txt_D_StkUoM.Text("")
+	gui.F_Maintenance.txt_D_Purch_UoM.Text("")
+	gui.F_Maintenance.txt_D_Package.Text("")
+	gui.F_Maintenance.txt_D_ABC.Text("")
+	gui.F_Maintenance.txt_D_RunScrap.Text("")
+	gui.F_Maintenance.txt_D_SetupScrap.Text("")
+	gui.F_Maintenance.txt_D_MRC.Text("")
+	gui.F_Maintenance.txt_D_OrderQty.Text("")
+	gui.F_Maintenance.txt_D_SafetyQty.Text("")
+	gui.F_Maintenance.txt_D_ReorderPoint.Text("")
+	gui.F_Maintenance.txt_D_Buyer.Text("")
+	gui.F_Maintenance.txt_D_LeadDays.Text("")
+	gui.F_Maintenance.txt_D_AmtCost.Text("")
+	gui.F_Maintenance.txt_D_Certification.Text("")
+	gui.F_Maintenance.txt_D_Sensitive.Text("")
+	gui.F_Maintenance.txt_D_Documentation.Text("")
+	gui.F_Maintenance.txt_D_NCNR.Text("")
+	gui.F_Maintenance.chk1.Value(0)
+	gui.F_Maintenance.chk2.Value(0)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.ClearDefaultTxts.End
+
+Program.Sub.cmdExport_Click.Start
+f.Intrinsic.Control.Try
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdExport_Click.End
+
+Program.Sub.F_Export_UnLoad.Start
+f.Intrinsic.Control.Try
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.F_Export_UnLoad.End
+
+Program.Sub.cmdLocBrw_Click.Start
+Program.Sub.cmdLocBrw_Click.End
+
+Program.Sub.cmdGridExport_Click.Start
+Program.Sub.cmdGridExport_Click.End
+
+Program.Sub.cmdNewPart_Click.Start
+f.Intrinsic.Control.Try
+	'Clean Textboxes
+	gui.F_NewPart.txtPartClass.Text("")
+	gui.F_NewPart.txtPartType.Text("")
+	gui.F_NewPart.txtPartPrefix.Text("")
+	'Visible.
+	gui.F_NewPart..Visible(True)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdNewPart_Click.End
+
+Program.Sub.F_NewPart_UnLoad.Start
+f.Intrinsic.Control.Try
+	'Invisible.
+	gui.F_NewPart..Visible(False)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.F_NewPart_UnLoad.End
+
+Program.Sub.cmdClassTypeBrw_Click.Start
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	'Browser
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.UI.Browser("Part Class & Type Maintenance", "con", "Select Class_ID, Type_ID, Prefix_Char, Desc_Template from GCG_5787_CLASS_TYPE", "Class*!*Type*!*Prefix*!*Description", "80*!*80*!*80*!*200", v.Local.sRet)
+	f.ODBC.Connection!con.Close
+	'Get Data from Browser
+	f.Intrinsic.Control.If(v.Local.sRet.Trim, <>, "***CANCEL****")
+		f.Intrinsic.String.Split(v.Local.sRet, "*!*", v.Local.sRet)
+		gui.F_NewPart.txtPartClass.Text(v.Local.sRet(0))
+		gui.F_NewPart.txtPartType.Text(v.Local.sRet(1))
+		gui.F_NewPart.txtPartPrefix.Text(v.Local.sRet(2))
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdClassTypeBrw_Click.End
+
+Program.Sub.cmdCreateNew_Click.Start
+v.Local.sClass.Declare
+v.Local.sType.Declare
+v.Local.sPrefix.Declare
+v.Local.sPart.Declare
+v.Local.sRet.Declare
+v.Local.sMsg.Declare
+v.Local.sParams.Declare
+f.Intrinsic.Control.Try
+	'Set variables.
+	v.Local.sClass.Set(v.Screen.F_NewPart!txtPartClass.Text)
+	v.Local.sType.Set(v.Screen.F_NewPart!txtPartType.Text)
+	v.Local.sPrefix.Set(v.Screen.F_NewPart!txtPartPrefix.Text)
+	'New Part
+	f.Intrinsic.Control.CallSub(newPartNumber, sPassedClass, v.Local.sClass, sPassedType, v.Local.sType, sPassedPrefix, v.Local.sPrefix)
+	v.Local.sPart.Set(v.Global.sCurrentNewPartNumber)
+	'Message
+	f.Intrinsic.String.Build("New Part: '{0}' created.{1}Do you wish to open Inventory Master Screen?", v.Local.sPart, v.Ambient.NewLine, v.Local.sMsg)
+	f.Intrinsic.UI.Msgbox(v.Local.sMsg, "New Part", 4, v.Local.sRet)
+	'Check to open Inv Master
+	f.Intrinsic.Control.If(v.Local.sRet.Trim, =, "6")
+		f.Intrinsic.String.Build("{0}!*!O!*!*!*ZDR*!*!*!*!*ZDR*!*!*!{1}!*!  ", v.Caller.CompanyCode, v.Local.sPart, v.Local.sParams)
+			f.Global.General.CallwrapperAsync(3500, v.Local.sParams)
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdCreateNew_Click.End
+
+Program.Sub.Comments.Start
+${$5$}$3.0.0.0$}$1
+${$6$}$aanazco$}$20200310154256643$}$7aQAV3Tor/tR9bkuakHbuzQlHVuXCGOzKfzv6dmZ7Y/vjmqzVUNKbNj6vog7prRBHL6AaOPJsXU=
+Program.Sub.Comments.End
