@@ -1,0 +1,13 @@
+-- Database: GLOBALCIG Metadata version: 2 Exported: Mar 9, 2020
+-- Begin Tables
+SET LEGACYTYPESALLOWED = ON;
+-- Begin Multi-Line Statement
+CREATE TABLE "GCG_5787_PN_RECORD" USING 'GCG_5787_PN_RECORD.mkd' PAGESIZE=4096 (
+ "CLASS_ID" CHAR(4),
+ "TYPE_ID" CHAR(4),
+ "PART_PREFIX" CHAR(4),
+ "PART_SUFFIX" NUMERIC(8,0),
+ "CUSTOM_PN" CHAR(20) );
+-- End Multi-Line Statement
+SET LEGACYTYPESALLOWED = OFF;
+-- End Tables
