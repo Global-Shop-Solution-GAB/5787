@@ -1,0 +1,515 @@
+﻿Program.Sub.Preflight.Start
+v.Global.sCurrentNewPartNumber.Declare
+V.Global.sCurrentNewLine.Declare
+
+'Bom Parent Table.
+f.Data.DataTable.Create("libBomParent", true)
+f.Data.DataTable.AddColumn("libBomParent", "gssPartNo", "String")
+f.Data.DataTable.AddColumn("libBomParent", "description", "String")
+f.Data.DataTable.AddColumn("libBomParent", "partClass", "String")
+f.Data.DataTable.AddColumn("libBomParent", "partType", "String")
+f.Data.DataTable.AddColumn("libBomParent", "mfg", "String")
+f.Data.DataTable.AddColumn("libBomParent", "mpn", "String")
+f.Data.DataTable.AddColumn("libBomParent", "custPartNum", "String")
+f.Data.DataTable.AddColumn("libBomParent", "custRev", "String")
+Program.Sub.Preflight.End
+
+Program.Sub.LibErrorMsg.Start
+v.Local.sError.Declare
+
+'Closes ODBC connection, default to connection : "con"
+f.Intrinsic.Control.If(v.ODBC!con.State, =, 1)
+	f.ODBC.Connection!con.Close
+f.Intrinsic.Control.EndIf
+
+'Generic Error message.
+f.Intrinsic.String.Build("Project GCG_5787_Part_Generator.g2u {0}{0}Subroutine: {1}{0}Error: {2} with Description: {3}", v.Ambient.NewLine, v.Args.CurrentSub, v.Ambient.ErrorNumber, v.Ambient.ErrorDescription, v.Local.sError)
+f.Intrinsic.UI.Msgbox(v.Local.sError)
+Program.Sub.LibErrorMsg.End
+
+Program.Sub.newPartNumber.Start
+v.Local.sPartClass.Declare
+v.Local.sPartType.Declare
+v.Local.sPartPrefix.Declare
+v.Local.iPartSuffix.Declare
+v.Local.sNewPartNumber.Declare
+
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+
+v.Local.sClassId.Declare
+v.Local.sTypeID.Declare
+v.Local.sPrefixChar.Declare
+v.Local.sDescTemplate.Declare
+v.Local.sInv_UM.Declare
+v.Local.sPurch_UM.Declare
+v.Local.sPackage.Declare
+v.Local.sABC.Declare
+v.Local.fRunScrap.Declare
+v.Local.iSetupQty.Declare
+v.Local.iOrderQty.Declare
+v.Local.iSafetyStock.Declare
+v.Local.iReorderPoint.Declare
+v.Local.sBuyer.Declare
+v.Local.iLeadDays.Declare
+v.Local.fAmtCost.Declare
+
+v.Local.bInspection.Declare
+v.Local.bCertificate.Declare
+v.Local.sCertificateFormatted.Declare
+v.Local.sInspectionFormatted.Declare
+
+v.Local.sMRC.Declare
+v.Local.sNCNR.Declare
+v.Local.sCertType.Declare
+v.Local.sSensitive.Declare
+v.Local.sDocumentation.Declare
+
+v.Local.sTempArray.Declare
+v.Local.sRunScrapFormatted.Declare
+v.Local.sSetupQtyFormatted.Declare
+v.Local.sOrderQtyFormatted.Declare
+v.Local.sSafetyStockFormatted.Declare
+v.Local.sReorderPointFormatted.Declare
+v.Local.sLeadDaysFormatted.Declare
+v.Local.sAMTCostFormatted.Declare
+
+v.Local.sText.Declare
+v.Local.sBlankFormat.Declare
+v.Local.sFilePath.Declare
+f.Intrinsic.Control.Try
+	'Set Arguments to local Variables.
+	v.Local.sPartClass.Set(v.Args.sPassedClass.Trim)
+	v.Local.sPartType.Set(v.Args.sPassedType.Trim)
+	v.Local.sPartPrefix.Set(v.Args.sPassedPrefix.Trim)
+	v.Local.iPartSuffix.Set(-1)
+	v.Global.sCurrentNewPartNumber.Set("")
+	v.Global.sCurrentNewLine.Set("")
+	
+	'Get top Part Suffix.
+	f.ODBC.Connection!con.OpenCompanyConnection
+	 	f.Intrinsic.String.Build("Select max(Part_Suffix) from GCG_5787_PN_RECORD where Class_ID = '{0}' and Type_ID = '{1}' and Part_Prefix = '{2}'", v.Local.sPartClass, v.Local.sPartType, v.Local.sPartPrefix, v.Local.sSQL)
+	 	f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.iPartSuffix)
+	f.ODBC.Connection!con.Close
+	'Check if empty create a new one. if not empty add a new one.
+	f.Intrinsic.Control.If(v.Local.iPartSuffix, =, 0)
+		v.Local.iPartSuffix.Set(1)
+	f.Intrinsic.Control.Else
+		f.Intrinsic.Math.Add(v.Local.iPartSuffix, 1, v.Local.iPartSuffix)
+	f.Intrinsic.Control.EndIf
+	'Pad suffux and create new part number name.
+	f.Intrinsic.String.LPad(v.Local.iPartSuffix, "0", 13, v.Local.sNewPartNumber)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sPartPrefix, v.Local.sNewPartNumber, v.Local.sNewPartNumber)
+	'Get Defaults
+	f.ODBC.Connection!con.OpenCompanyConnection
+	 	f.Intrinsic.String.Build("Select * from GCG_5787_CLASS_TYPE where Class_ID = '{0}' and Type_ID = '{1}' and Prefix_Char = '{2}'", v.Local.sPartClass, v.Local.sPartType, v.Local.sPartPrefix, v.Local.sSQL)
+	 	f.Data.DataTable.CreateFromSQL("tmpDefaultsDT", "con", v.Local.sSQL)
+	f.ODBC.Connection!con.Close
+	'Check if defaults Exists.
+	f.Intrinsic.Control.If(v.DataTable.tmpDefaultsDT.RowCount, =, 1)
+		v.Local.sClassId.Set(v.DataTable.tmpDefaultsDT(0).CLASS_ID!FieldValTrim)
+		v.Local.sTypeID.Set(v.DataTable.tmpDefaultsDT(0).TYPE_ID!FieldValTrim)
+		v.Local.sPrefixChar.Set(v.DataTable.tmpDefaultsDT(0).PREFIX_CHAR!FieldValTrim)
+		'Check for Override Value
+		f.Intrinsic.Control.If(v.Args.sPassedDesc.Trim, =, "")
+			v.Local.sDescTemplate.Set(v.DataTable.tmpDefaultsDT(0).DESC_TEMPLATE!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sDescTemplate.Set(v.Args.sPassedDesc)
+		f.Intrinsic.Control.EndIf		
+		
+		f.Intrinsic.Control.If(v.Args.sPassedInv_UM.Trim, =, "")
+			v.Local.sInv_UM.Set(v.DataTable.tmpDefaultsDT(0).INV_UM!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sInv_UM.Set(v.Args.sPassedInv_UM)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.sPassedPurch_UM.Trim, =, "")
+			v.Local.sPurch_UM.Set(v.DataTable.tmpDefaultsDT(0).PURCH_UM!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sPurch_UM.Set(v.Args.sPassedPurch_UM)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.sPassedPackage.Trim, =, "")
+			v.Local.sPackage.Set(v.DataTable.tmpDefaultsDT(0).PACKAGING!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sPackage.Set(v.Args.sPassedPackage)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.sPassedABC.Trim, =, "")
+			v.Local.sABC.Set(v.DataTable.tmpDefaultsDT(0).ABC!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sABC.Set(v.Args.sPassedABC)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.fPassedRunScrap.Trim, =, "")
+			v.Local.fRunScrap.Set(v.DataTable.tmpDefaultsDT(0).RUNSCRAP!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.fRunScrap.Set(v.Args.fPassedRunScrap)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.iPassedSetupQty.Trim, =, "")
+			v.Local.iSetupQty.Set(v.DataTable.tmpDefaultsDT(0).SETUP_QTY!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.iSetupQty.Set(v.Args.iPassedSetupQty)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.iPassedOrderQty.Trim, =, "")
+			v.Local.iOrderQty.Set(v.DataTable.tmpDefaultsDT(0).ORDER_QTY!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.iOrderQty.Set(v.Args.iPassedOrderQty)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.iPassedSafetyStock.Trim, =, "")
+			v.Local.iSafetyStock.Set(v.DataTable.tmpDefaultsDT(0).SAFETY_STOCK!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.iSafetyStock.Set(v.Args.iPassedSafetyStock)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.iPassedReorderPoint.Trim, =, "")
+			v.Local.iReorderPoint.Set(v.DataTable.tmpDefaultsDT(0).REORDERPOINT!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.iReorderPoint.Set(v.Args.iPassedReorderPoint)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.sPassedBuyer.Trim, =, "")
+			v.Local.sBuyer.Set(v.DataTable.tmpDefaultsDT(0).BUYER!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sBuyer.Set(v.Args.sPassedBuyer)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.iPassedLeadDays.Trim, =, "")
+			v.Local.iLeadDays.Set(v.DataTable.tmpDefaultsDT(0).LEAD_DAYS!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.iLeadDays.Set(v.Args.iPassedLeadDays)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.fPassedAmtCost.Trim, =, "")
+			v.Local.fAmtCost.Set(v.DataTable.tmpDefaultsDT(0).AMT_COST!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.fAmtCost.Set(v.Args.fPassedAmtCost)
+		f.Intrinsic.Control.EndIf
+		
+		v.Local.bInspection.Set(v.DataTable.tmpDefaultsDT(0).INSPECTION_REQ!FieldVal)
+		v.Local.bCertificate.Set(v.DataTable.tmpDefaultsDT(0).CERTIFICATE_REQ!FieldVal)
+		
+		f.Intrinsic.Control.If(v.Args.sPassedMRC.Trim, =, "")
+			v.Local.sMRC.Set(v.DataTable.tmpDefaultsDT(0).MRC!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sMRC.Set(v.Args.sPassedMRC)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.sPassedNCNR.Trim, =, "")
+			v.Local.sNCNR.Set(v.DataTable.tmpDefaultsDT(0).NCNR!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sNCNR.Set(v.Args.sPassedNCNR)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.sPassedCertType.Trim, =, "")
+			v.Local.sCertType.Set(v.DataTable.tmpDefaultsDT(0).CERTIFICATION!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sCertType.Set(v.Args.sPassedCertType)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.sPassedSensitive.Trim, =, "")
+			v.Local.sSensitive.Set(v.DataTable.tmpDefaultsDT(0).SENSITIVE!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sSensitive.Set(v.Args.sPassedSensitive)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Args.sPassedDocumentation.Trim, =, "")
+			v.Local.sDocumentation.Set(v.DataTable.tmpDefaultsDT(0).DOCUMENTATION!FieldValTrim)
+		f.Intrinsic.Control.Else
+			v.Local.sDocumentation.Set(v.Args.sPassedDocumentation)
+		f.Intrinsic.Control.EndIf
+	f.Intrinsic.Control.Else
+		'f.Intrinsic.UI.Msgbox("This Part Class combination doesn't have just one record for Default fields. Part not created.")
+		f.Data.DataTable.Close("tmpDefaultsDT")
+		v.Global.sCurrentNewPartNumber.Set("")
+		v.Global.sCurrentNewLine.Set("")
+		f.Intrinsic.Control.ExitSub
+	f.Intrinsic.Control.EndIf	
+	'build textfile for Inv Upload.
+	v.Local.sText.Set("")
+	'Format part number and default fields.
+	f.Intrinsic.String.RPad(v.Local.sNewPartNumber, " ", 20, v.Local.sNewPartNumber) 'Part Number 1-20/20
+	f.Intrinsic.String.RPad(v.Local.sDescTemplate, " ", 30, v.Local.sDescTemplate) 'Part Description 32-61/30
+	f.Intrinsic.String.RPad(v.Local.sInv_UM, " ", 2, v.Local.sInv_UM) 'Inventory/Selling Unit of Measure 65-66/2 
+	f.Intrinsic.String.RPad(v.Local.sPurch_UM, " ", 2, v.Local.sPurch_UM) 'Purchase Unit of Measure 62-63/2
+	f.Intrinsic.String.RPad(v.Local.sPackage, " ", 20, v.Local.sPackage)
+	f.Intrinsic.String.RPad(v.Local.sABC, " ", 1, v.Local.sABC) 'ABC Code 23-23/1
+	f.Intrinsic.String.RPad(v.Local.sBuyer, " ", 10, v.Local.sBuyer) 'Sort Code 356-365/10
+	f.Intrinsic.String.RPad(v.Local.sMRC, " ", 12, v.Local.sMRC)' Source 426-437/12
+	'Format Cert Type - I don't know where to put it.
+	
+	'Format Field: Requieres Certification From Customer. ('Maybe)
+	f.Intrinsic.Control.If(v.Local.bCertificate)
+		v.Local.sCertificateFormatted.Set("Y")
+	f.Intrinsic.Control.Else
+		v.Local.sCertificateFormatted.Set("N")
+	f.Intrinsic.Control.EndIf
+	
+	'Format Field: Requieres Inspections Y/N 1000-1000/1
+	f.Intrinsic.Control.If(v.Local.bInspection)
+		v.Local.sInspectionFormatted.Set("Y")
+	f.Intrinsic.Control.Else
+		v.Local.sInspectionFormatted.Set("N")
+	f.Intrinsic.Control.EndIf
+	
+	'Format Number Fields.
+	f.Intrinsic.String.Split(v.Local.fRunScrap, ".", v.Local.sTempArray)
+	f.Intrinsic.Control.If(v.Local.sTempArray.UBound, =, 1)
+		f.Intrinsic.String.LPad(v.Local.sTempArray(0), "0", 8, v.Local.sTempArray(0))
+		f.Intrinsic.String.RPad(v.Local.sTempArray(1), "0", 4, v.Local.sTempArray(1))
+		f.Intrinsic.String.Build("{0}.{1}", v.Local.sTempArray(0), v.Local.sTempArray(1), v.Local.sRunScrapFormatted)
+		f.Intrinsic.String.LPad(v.Local.sRunScrapFormatted, "0", 16, v.Local.sRunScrapFormatted)
+	f.Intrinsic.Control.Else
+		f.Intrinsic.String.Build("{0}.0000", v.Local.sTempArray(0), v.Local.sRunScrapFormatted)
+		f.Intrinsic.String.LPad(v.Local.sRunScrapFormatted, "0", 16, v.Local.sRunScrapFormatted)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.String.Split(v.Local.iSetupQty, ".", v.Local.sTempArray)
+	f.Intrinsic.Control.If(v.Local.sTempArray.UBound, =, 1)
+		f.Intrinsic.String.LPad(v.Local.sTempArray(0), "0", 8, v.Local.sTempArray(0))
+		f.Intrinsic.String.RPad(v.Local.sTempArray(1), "0", 4, v.Local.sTempArray(1))
+		f.Intrinsic.String.Build("{0}.{1}", v.Local.sTempArray(0), v.Local.sTempArray(1), v.Local.sSetupQtyFormatted)
+		f.Intrinsic.String.LPad(v.Local.sSetupQtyFormatted, "0", 16, v.Local.sSetupQtyFormatted)
+	f.Intrinsic.Control.Else
+		f.Intrinsic.String.Build("{0}.0000", v.Local.sTempArray(0), v.Local.sSetupQtyFormatted)
+		f.Intrinsic.String.LPad(v.Local.sSetupQtyFormatted, "0", 16, v.Local.sSetupQtyFormatted)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.String.Split(v.Local.iOrderQty, ".", v.Local.sTempArray) 'Order Quantity 84-99/16
+	f.Intrinsic.Control.If(v.Local.sTempArray.UBound, =, 1)
+		f.Intrinsic.String.LPad(v.Local.sTempArray(0), "0", 8, v.Local.sTempArray(0))
+		f.Intrinsic.String.RPad(v.Local.sTempArray(1), "0", 4, v.Local.sTempArray(1))
+		f.Intrinsic.String.Build("{0}.{1}", v.Local.sTempArray(0), v.Local.sTempArray(1), v.Local.sOrderQtyFormatted)
+		f.Intrinsic.String.LPad(v.Local.sOrderQtyFormatted, "0", 16, v.Local.sOrderQtyFormatted)
+	f.Intrinsic.Control.Else
+		f.Intrinsic.String.Build("{0}.0000", v.Local.sTempArray(0), v.Local.sOrderQtyFormatted)
+		f.Intrinsic.String.LPad(v.Local.sOrderQtyFormatted, "0", 16, v.Local.sOrderQtyFormatted)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.String.Split(v.Local.iSafetyStock, ".", v.Local.sTempArray) 'Safety Quantity 84-99/16
+	f.Intrinsic.Control.If(v.Local.sTempArray.UBound, =, 1)
+		f.Intrinsic.String.LPad(v.Local.sTempArray(0), "0", 8, v.Local.sTempArray(0))
+		f.Intrinsic.String.RPad(v.Local.sTempArray(1), "0", 4, v.Local.sTempArray(1))
+		f.Intrinsic.String.Build("{0}.{1}", v.Local.sTempArray(0), v.Local.sTempArray(1), v.Local.sSafetyStockFormatted)
+		f.Intrinsic.String.LPad(v.Local.sSafetyStockFormatted, "0", 16, v.Local.sSafetyStockFormatted)
+	f.Intrinsic.Control.Else
+		f.Intrinsic.String.Build("{0}.0000", v.Local.sTempArray(0), v.Local.sSafetyStockFormatted)
+		f.Intrinsic.String.LPad(v.Local.sSafetyStockFormatted, "0", 16, v.Local.sSafetyStockFormatted)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.String.Split(v.Local.iReorderPoint, ".", v.Local.sTempArray) 'Reorder Point 116-131/16
+	f.Intrinsic.Control.If(v.Local.sTempArray.UBound, =, 1)
+		f.Intrinsic.String.LPad(v.Local.sTempArray(0), "0", 8, v.Local.sTempArray(0))
+		f.Intrinsic.String.RPad(v.Local.sTempArray(1), "0", 4, v.Local.sTempArray(1))
+		f.Intrinsic.String.Build("{0}.{1}", v.Local.sTempArray(0), v.Local.sTempArray(1), v.Local.sReorderPointFormatted)
+		f.Intrinsic.String.LPad(v.Local.sReorderPointFormatted, "0", 16, v.Local.sReorderPointFormatted)
+	f.Intrinsic.Control.Else
+		f.Intrinsic.String.Build("{0}.0000", v.Local.sTempArray(0), v.Local.sReorderPointFormatted)
+		f.Intrinsic.String.LPad(v.Local.sReorderPointFormatted, "0", 16, v.Local.sReorderPointFormatted)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.String.RPad(v.Local.iLeadDays, " ", 4, v.Local.sLeadDaysFormatted) 'Lead Days 372-375/4
+	
+	f.Intrinsic.String.Split(v.Local.fAmtCost, ".", v.Local.sTempArray) 'Unit Cost 132-147/16
+	f.Intrinsic.Control.If(v.Local.sTempArray.UBound, =, 1)
+		f.Intrinsic.String.LPad(v.Local.sTempArray(0), "0", 8, v.Local.sTempArray(0))
+		f.Intrinsic.String.RPad(v.Local.sTempArray(1), "0", 4, v.Local.sTempArray(1))
+		f.Intrinsic.String.Build("{0}.{1}", v.Local.sTempArray(0), v.Local.sTempArray(1), v.Local.sAMTCostFormatted)
+		f.Intrinsic.String.LPad(v.Local.sAMTCostFormatted, "0", 16, v.Local.sAMTCostFormatted)
+	f.Intrinsic.Control.Else
+		f.Intrinsic.String.Build("{0}.0000", v.Local.sTempArray(0), v.Local.sAMTCostFormatted)
+		f.Intrinsic.String.LPad(v.Local.sAMTCostFormatted, "0", 16, v.Local.sAMTCostFormatted)
+	f.Intrinsic.Control.EndIf
+
+	'Create Text
+	'1-22 (Part Number 20 + Location Code 2)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sNewPartNumber, "  ", v.Local.sText) 
+	'23-23 (ABC Code)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sABC, v.Local.sText) 
+	'24-31 (Product Line 2 + Bin Number 6)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, "        ", v.Local.sText) 
+	 '32-61 (Part Description 30)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sDescTemplate, v.Local.sText)
+	'62-63 (Purchasing UM 2)
+	f.Intrinsic.String.Build("{0}{1} ", v.Local.sText, v.Local.sPurch_UM, v.Local.sText) 
+	'64-64 (Filler 1)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, " ", v.Local.sText) 
+	'65-66 (Inventory UM 2)
+	f.Intrinsic.String.Build("{0}{1} ", v.Local.sText, v.Local.sInv_UM, v.Local.sText) 
+	'67-67 (Filler 1)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, " ", v.Local.sText) 
+	'Empty Track
+	v.Local.sBlankFormat.Set("")
+	f.Intrinsic.String.LPad(v.Local.sBlankFormat, " ", 16, v.Local.sBlankFormat)
+	'68-83 (Purchasing Conversion Factor 16)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sBlankFormat, v.Local.sText) 
+	'Continue Building Uplaod File
+	'84-99 (Order Quantity 16)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sOrderQtyFormatted, v.Local.sText) 
+	'100-115 (On Hand Quantity 16)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sBlankFormat, v.Local.sText) 
+	'116-131 (Reorder Point 16)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sReorderPointFormatted, v.Local.sText) 
+	'132-147 (Unit Cost 16)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sAMTCostFormatted, v.Local.sText) 
+	'Empty Track Formatting
+	v.Local.sBlankFormat.Set("")
+	f.Intrinsic.String.LPad(v.Local.sBlankFormat, " ", 208, v.Local.sBlankFormat)
+	'Continue Building Uplaod File
+	'148-355 (Monthly Usage + List Price 16*13 = 208)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sBlankFormat, v.Local.sText) 
+	'356-365 (Sort Code use)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sBuyer, v.Local.sText) 
+	'Empty Track Formatting
+	v.Local.sBlankFormat.Set("")
+	f.Intrinsic.String.LPad(v.Local.sBlankFormat, " ", 6, v.Local.sBlankFormat)
+	'Continue Building Uplaod File
+	'366-371 (Last Audit Date 6)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sBlankFormat, v.Local.sText) 
+	'372-375 (Lead Time 4)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sLeadDaysFormatted, v.Local.sText) 
+	'Empty Track Formatting
+	v.Local.sBlankFormat.Set("")
+	f.Intrinsic.String.LPad(v.Local.sBlankFormat, " ", 48, v.Local.sBlankFormat)
+	'Continue Building Uplaod File
+	'376-425 (Stock Calculator Fields 16+16+16+1+1 = 50)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sBlankFormat, v.Local.sText) 
+	'426-437 (Source 12)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sMRC, v.Local.sText) 
+	'Empty Track Formatting
+	v.Local.sBlankFormat.Set("")
+	f.Intrinsic.String.LPad(v.Local.sBlankFormat, " ", 395, v.Local.sBlankFormat)
+	'Continue Building Uplaod File
+	'438-832 (Multiple fields 395)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sBlankFormat, v.Local.sText) 
+	'833-848 (Safety Stock 16)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sSafetyStockFormatted, v.Local.sText) 
+	'Empty Track Formatting
+	v.Local.sBlankFormat.Set("")
+	f.Intrinsic.String.LPad(v.Local.sBlankFormat, " ", 151, v.Local.sBlankFormat)
+	'Continue Building Uplaod File
+	'849-999 (Multiple fields 151)	
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, v.Local.sBlankFormat, v.Local.sText) 
+	'1000-1000 (Requires Inspection 1)
+	f.Intrinsic.String.Build("{0}{1}", v.Local.sText, , v.Local.sInspectionFormatted, v.Local.sText) 
+'	'Create File Path
+'	f.Intrinsic.String.Build("{0}\INV.TXT", v.Caller.FilesDir, v.Local.sFilePath)
+'	f.Intrinsic.File.String2File(v.Local.sFilePath, v.Local.sText)
+'	
+'	'Call 1Shot Program to upload a part.
+'	f.Global.General.CallWrapperSync(50, "UPLINV/NOMAINT")
+	
+	v.Global.sCurrentNewPartNumber.Set(v.Local.sNewPartNumber.Trim)
+	v.Global.sCurrentNewLine.Set(v.Local.sText)
+	
+	'Add the part Number created to Custom Record.
+	f.ODBC.Connection!con.OpenCompanyConnection
+		 f.Intrinsic.String.Build("Insert into  GCG_5787_PN_RECORD (CLASS_ID, TYPE_ID, PART_PREFIX, PART_SUFFIX, CUSTOM_PN) Values ('{0}', '{1}', '{2}', '{3}', '{4}')", v.Local.sPartClass.Trim, v.Local.sPartType.Trim, v.Local.sPartPrefix.Trim, v.Local.iPartSuffix, v.Local.sNewPartNumber, v.Local.sSQL)
+		f.ODBC.Connection!con.Execute(v.Local.sSQL)
+	f.ODBC.Connection!con.Close	
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(LibErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.newPartNumber.End
+
+Program.Sub.libBomUpload.Start
+v.Local.sFilePath.Declare
+v.Local.sText.Declare
+v.Local.sColTitles.Declare
+v.Local.sColTypes.Declare
+v.Local.bExcel.Declare
+v.Local.sForm.Declare
+v.Local.sProgressBar.Declare
+v.Local.bEnableProgressBar.Declare
+f.Intrinsic.Control.Try
+
+	'Passed args:
+	'    passedEnanblePB        Boolean     Enables/disables progress bar
+	'    passedPBname        String        Progress bar name
+	'    passedFormName        String        Form name
+	'    passedFilePath        String        File path for spreadsheet to read
+	
+	v.Local.bEnableProgressBar.Set(v.Args.passedEnanblePB)
+	
+	f.Intrinsic.Control.If(v.Local.bEnableProgressBar)
+		v.Local.sProgressBar.Set(v.Args.passedPBname)
+		v.Local.sForm.Set(v.Args.passedFormName)
+		gui.[v.local.sForm].[v.local.sProgressBar].Value(0)
+		gui.[v.local.sForm].[v.local.sProgressBar].Visible(True)
+	f.Intrinsic.Control.EndIf
+		
+	v.Local.sFilePath.Set(v.Args.passedFilePath)
+	f.Intrinsic.String.Trim(v.Local.sFilePath, v.Local.sFilePath)
+	'Check if upload table exists.
+	f.Intrinsic.Control.If(v.DataTable.libBomUploadDT.Exists)
+		f.Data.DataTable.Close("libBomUploadDT")
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.If(v.Local.bEnableProgressBar)
+		gui.[v.local.sForm].[v.local.sProgressBar].Value(10)
+	f.Intrinsic.Control.EndIf
+	
+	'Set Titles and Types.
+	v.Local.sColTitles.Set("itemno*!*partSource*!*partClass*!*partType*!*workCenter*!*gssPartNo*!*gssRev*!*custPartNo*!*custRev*!*description*!*package*!*pinCount*!*msl*!*qty*!*invUM*!*i2pConversion*!*purchUM*!*refDesg*!*mfg*!*mpn*!*defaultBin*!*stdCost*!*minOrder*!*multOrder*!*leadTimes*!*sort_Code*!*NCNR*!*partPackaging*!*run_Scrap*!*Insp_Req*!*cert_Req*!*rohsVer*!*rohsExceptionApplies*!*rohsExceptions*!*reachContainsSVHC*!*reachContainedCAS*!*reachSVHClimitExceeded*!*reachSVHClimitExceededCAS*!*reachListVer*!*cal65status*!*caProp65CAS")
+	v.Local.sColTypes.Set("String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String")
+
+	f.Intrinsic.Control.If(v.Local.bEnableProgressBar)
+		gui.[v.local.sForm].[v.local.sProgressBar].Value(20)
+	f.Intrinsic.Control.EndIf
+	
+	'check Exccel is installed.
+	f.Automation.MSExcel.CheckPresence(v.Local.bExcel)
+	f.Intrinsic.Control.If(v.Local.bExcel)
+		'Read using Excel.
+		f.Automation.MSExcel.ReadSpreadsheet(v.Local.sFilePath, v.Local.sText)
+		f.Intrinsic.Control.If(v.Local.bEnableProgressBar)
+			gui.[v.local.sForm].[v.local.sProgressBar].Value(40)
+		f.Intrinsic.Control.EndIf
+		
+		'Check that the file is not empty
+		f.Intrinsic.Control.If(v.Local.sText.Trim, =, "")
+			f.Intrinsic.UI.Msgbox("Selected File contains no Data. Please Select a new one.")
+			f.Intrinsic.Control.ExitSub
+		f.Intrinsic.Control.EndIf
+		'Create Dt
+		f.Data.DataTable.CreateFromString("libBomUploadDT", v.Local.sText, v.Local.sColTitles, v.Local.sColTypes, "*!*", "$!$", true)
+		f.Data.DataTable.CreateFromString("libBomCompleteDT", v.Local.sText, v.Local.sColTitles, v.Local.sColTypes, "*!*", "$!$", true)
+		f.Data.DataTable.AddColumn("libBomCompleteDT", "bom_parent", "String")
+		f.Data.DataTable.DeleteRow("libBomCompleteDT", 0)
+	f.Intrinsic.Control.Else
+		f.Intrinsic.Control.If(v.Local.bEnableProgressBar)
+			gui.[v.local.sForm].[v.local.sProgressBar].Value(40)
+		f.Intrinsic.Control.EndIf
+		'create table using csv
+		f.Data.DataTable.CreateFromCSV("libBomUploadDT", v.Local.sFilePath,v.Local.sColTitles, v.Local.sColTypes, true)
+		f.Data.DataTable.CreateFromCSV("libBomCompleteDT", v.Local.sFilePath,v.Local.sColTitles, v.Local.sColTypes, true)
+		f.Data.DataTable.AddColumn("libBomCompleteDT", "bom_parent", "String")
+		f.Data.DataTable.DeleteRow("libBomCompleteDT", 0)
+		f.Intrinsic.File.File2String(v.Local.sFilePath, v.Local.sText)
+	f.Intrinsic.Control.EndIf
+	f.Intrinsic.Control.If(v.Local.bEnableProgressBar)
+		gui.[v.local.sForm].[v.local.sProgressBar].Value(50)
+	f.Intrinsic.Control.EndIf
+	
+	'Get Bom Parent Data
+	f.Data.DataTable.AddRow("libBomParent", "gssPartNo", v.DataTable.libBomUploadDT(1).gssPartNo!FieldValTrim, "description", v.DataTable.libBomUploadDT(1).description!FieldValTrim, "partClass", v.DataTable.libBomUploadDT(1).partClass!FieldValTrim, "partType", v.DataTable.libBomUploadDT(1).partType!FieldValTrim, "mfg", v.DataTable.libBomUploadDT(1).mfg!FieldValTrim, "mpn", v.DataTable.libBomUploadDT(1).mpn!FieldValTrim, "custPartNum", v.DataTable.libBomUploadDT(1).custPartNo!FieldValTrim)
+	'format Data
+	'f.Intrinsic.Control.CallSub("formatUpload")
+	f.Intrinsic.Control.If(v.Local.bEnableProgressBar)
+		gui.[v.local.sForm].[v.local.sProgressBar].Value(0)
+		gui.[v.local.sForm].[v.local.sProgressBar].Visible(False)	
+	f.Intrinsic.Control.EndIf
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.libBomUpload.End
+
+Program.Sub.Comments.Start
+${$5$}$3.0.0.0$}$1
+${$6$}$aanazco$}$20200309163555503$}$7aQAV3Tor/tR9bkuakHbuzQlHVuXCGOzKfzv6dmZ7Y9+jCIAbP03uoTsfz87P2a8ZrZai56aFVY=
+Program.Sub.Comments.End
